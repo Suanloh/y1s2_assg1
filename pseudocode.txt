@@ -1,0 +1,93 @@
+BEGIN
+
+    DECLARE parallel arrays for users:
+        userID[100]
+        userName[100]
+        country[100]
+        state[100]
+        email[100]
+        membership[100]
+        points[100]
+        userCount
+
+    DECLARE parallel arrays for reviews:
+        reviewUserID[500]
+        rating[500]
+        reviewText[500]
+        hotelName[500]
+        reviewCount
+
+    OPEN users.txt (read only)
+    CALL loadUsers(userID, userName, country, state, email, membership, points, userCount)
+        FUNCTION loadUsers(userID[], userName[], country[], state[], email[], membership[], points[], userCount)
+            userCount = 0
+            WHILE NOT EOF
+        READ userID[userCount], userName[userCount], country[userCount],
+             state[userCount], email[userCount], membership[userCount], points[userCount]
+        userCount = userCount + 1
+    END WHILE
+END FUNCTION
+
+    CLOSE users.txt
+
+    OPEN reviews.txt (read only)
+    CALL loadReviews(reviewUserID, rating, reviewText, hotelName, reviewCount)
+    CLOSE reviews.txt
+
+    REPEAT
+        DISPLAY menu
+        GET userChoice
+
+        IF userChoice = 1 THEN
+            CALL displayReviewsByUser(reviewUserID, rating, reviewText, hotelName, reviewCount)
+
+        ELSE IF userChoice = 2 THEN
+            CALL displayReviewsByHotel(reviewUserID, rating, reviewText, hotelName, reviewCount)
+
+        ELSE IF userChoice = 3 THEN
+            CALL displayAllUserInfo(userID, userName, country, state, email, membership, points, userCount)
+
+        ELSE IF userChoice = 4 THEN
+            CALL displayPositiveReviews(reviewUserID, rating, reviewText, hotelName, reviewCount)
+
+        ELSE IF userChoice = 5 THEN
+            CALL displaySummary(userCount, reviewCount, points)
+
+        ELSE IF userChoice = 6 THEN
+            CALL displayUsersByCategory(userID, userName, membership, userCount)
+
+        ELSE IF userChoice = 7 THEN
+            CALL displayLeaderboard(reviewUserID, userID, userName, userCount, reviewCount)
+
+        ELSE IF userChoice = 8 THEN
+            CALL displayTop3Reviewers(reviewUserID, userID, userName, userCount, reviewCount)
+
+        ELSE IF userChoice = 9 THEN
+            CALL showHotelRatingSummary(hotelName, rating, reviewCount)
+
+        ELSE IF userChoice = 10 THEN
+            CALL addNewReview(reviewUserID, rating, reviewText, hotelName, reviewCount)
+            CALL updateUserPoints(reviewUserID, points, membership, reviewCount, userCount)
+
+        ELSE IF userChoice = 11 THEN
+            CALL sortUsersByPoints(userID, userName, points, membership, userCount)
+
+        ELSE IF userChoice = 12 THEN
+            CALL sortHotelsByReviews(hotelName, reviewCount)
+
+        ELSE IF userChoice = 13 THEN
+            CALL keywordSearch(reviewText, hotelName, reviewUserID, reviewCount)
+
+        END IF
+
+    UNTIL userChoice == 0
+
+    OPEN users.txt (write only)
+    CALL saveUsers(…)
+    CLOSE users.txt
+
+    OPEN reviews.txt (write only)
+    CALL saveReviews(…)
+    CLOSE reviews.txt
+
+END
