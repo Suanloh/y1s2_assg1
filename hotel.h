@@ -2,13 +2,13 @@
 #define HOTEL_H
 
 #include <string>
-#include "Review.h"
+#include "review.h"
 using namespace std;
 
 class Hotel {
 private:
     string hotelName;
-
+    double budget;
     int reviewCount;
     int totalRate;
 
@@ -20,7 +20,11 @@ public:
         return hotelName;
     };
 
-    void addReview(const Review& r){};   // updates totals if review matches this hotel
+    void addReview(const Review& r){
+        reviewCount++;
+        totalRate += r.getRate();
+    };  
+
     int getReviewCount() const{
         return reviewCount;
     };
