@@ -5,12 +5,15 @@
 #include "review.h"
 using namespace std;
 
+const int MAX_REVIEW_HOTELS = 200;
 class Hotel {
 private:
     string hotelName;
     double budget;
     int reviewCount;
     int totalRate;
+
+    Review rv [MAX_REVIEW_HOTELS];
 
 public:
     Hotel():hotelName(""), reviewCount(0), totalRate(0){};
@@ -20,7 +23,12 @@ public:
         return hotelName;
     };
 
-    void addReview(const Review& r){
+    // add review to the hotel, in array
+    void addReview(const Review& r){ 
+        if(reviewCount >= MAX_REVIEW_HOTELS){
+            return;
+        }
+        rv[reviewCount] = r;
         reviewCount++;
         totalRate += r.getRate();
     };  
@@ -49,6 +57,8 @@ public:
 
         return this->hotelName > rhs.hotelName;
     }
+    
+    friend void generateReport(const Hotel& hotel);
 };
 
 #endif
