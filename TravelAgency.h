@@ -25,12 +25,14 @@ private:
 public:
     TravelAgency(){}
     TravelAgency(const string& name): agencyName(name), hotelCount(0){}
-    void Menu();
+    void menu();
     void SummarizeReviewsMenu();
     void ManageTravelerProfileMenu();
     void SearchReviewsMenu();
     void TopTravelersMenu();
 
+    void readFile();
+    void saveFile();
 
 };
 
@@ -102,7 +104,7 @@ void TravelAgency::SummarizeReviewsMenu() {
                 string hotelName;
                 cin >> hotelName;
                 // Add logic to summarize reviews for the hotel
-                generateReport(Hotel(hotelName)); 
+                generateReport(Hotel(hotelName)); //not like this, future solve
                 break;
             }
             case 2:
