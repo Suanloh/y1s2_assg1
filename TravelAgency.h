@@ -2,13 +2,25 @@
 #define TRAVELAGENCY_H
 
 #include "hotel.h"
+// TODO: person.h needs to have the following attributes to support readFile():
+//       - country, state, email, userLevel, score (getters and setters)
+//       - Constructor: Person(userID, username, country, state, email, userLevel, score)
 #include "person.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
+
+const int MAX_HOTELS = 10;
+const int MAX_TRAVELERS = 10;
 
 class TravelAgency {
 private:
     string agencyName;
     int hotelCount;
+    int travelerCount;
+    Hotel hotels[MAX_HOTELS];
+    Person travelers[MAX_TRAVELERS];
 
 public:
     TravelAgency(){}
@@ -22,7 +34,7 @@ public:
 
 };
 
-void TravelAgency::Menu() {
+void TravelAgency::menu() {
     bool running = true;
     do {
         cout << "Welcome to " << agencyName << " Travel Agency!" << endl;
@@ -32,9 +44,10 @@ void TravelAgency::Menu() {
         cout << "3. Search reviews" << endl;
         cout << "4. Top Travelers" << endl;
         cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
 
         int choice;
-        cin >> choice; 
+        cin >> choice;
 
         switch (choice) {
             case 1:
@@ -59,6 +72,21 @@ void TravelAgency::Menu() {
     } while (running);
 }
 
+void TravelAgency::readFile() {
+    // TODO: Implement traveler reading once Person.h is updated
+    // Placeholder: Skip traveler file reading
+    
+    // TODO: Implement review parsing
+    // Placeholder: Skip review file reading
+    cout << "TODO: Implement file reading for hotels, travelers, and reviews" << endl;
+}
+
+void TravelAgency::saveFile() {
+    // TODO: Implement save to file once data structure is complete
+    // Placeholder: Skip file saving for now
+    cout << "TODO: Implement file saving for hotels, travelers, and reviews" << endl;
+}
+
 void TravelAgency::SummarizeReviewsMenu() {
     bool exitSub = false;
     do {
@@ -70,7 +98,7 @@ void TravelAgency::SummarizeReviewsMenu() {
         switch (subChoice) {
             case 1: {
                 // Placeholder: Implement enter hotel name and summarize reviews
-                cout << "Enter hotel name: ";
+                cout << "TODO Enter hotel name: ";
                 string hotelName;
                 cin >> hotelName;
                 // Add logic to summarize reviews for the hotel
@@ -97,14 +125,10 @@ void TravelAgency::ManageTravelerProfileMenu() {
         cin >> subChoice;
         switch (subChoice) {
             case 1:
-                // Placeholder: Implement view profile
-                cout << "Viewing profile..." << endl;
-                // Add logic to display traveler profile
+                cout << "TODO: Implement view profile" << endl;
                 break;
             case 2:
-                // Placeholder: Implement edit profile
-                cout << "Editing profile..." << endl;
-                // Add logic to edit traveler profile
+                cout << "TODO: Implement edit profile" << endl;
                 break;
             case 3:
                 exitSub = true;
@@ -127,7 +151,7 @@ void TravelAgency::SearchReviewsMenu() {
         switch (subChoice) {
             case 1: {
                 // Placeholder: Implement search by hotel
-                cout << "Enter hotel name to search: ";
+                cout << " TODO Enter hotel name to search: ";
                 string hotelName;
                 cin >> hotelName;
                 // Add logic to search reviews by hotel
@@ -135,7 +159,7 @@ void TravelAgency::SearchReviewsMenu() {
             }
             case 2: {
                 // Placeholder: Implement search by rating
-                cout << "Enter rating to search: ";
+                cout << "TODO Enter rating to search: ";
                 int rating;
                 cin >> rating;
                 // Add logic to search reviews by rating

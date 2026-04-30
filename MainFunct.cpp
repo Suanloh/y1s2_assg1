@@ -18,13 +18,12 @@ using namespace std;
 int main() {
     string jibet = "Jibet Hotel";
     Hotel h1(jibet);
-    // h1.printReport();
-    cout << "Hotel Name: " << h1.getHotelName() << endl;
-    cout << "Average Rating: " << h1.averageRating() << endl;
-    cout << "Review Count: " << h1.getReviewCount() << endl;
-    // h1.generateReport(); // Call the friend function to generate the report for h1
-    TravelAgency agency;
-    agency.Menu(); // Call the menu function to display options to the user
+    generateReport(h1); // Call the friend function to generate the report for h1
+
+    string agencyName = "Global Explorer";
+    TravelAgency agency(agencyName);
+    agency.readFile(); // Call the readFile function to load data from files (currently a placeholder)
+    agency.menu(); // Call the menu function to display options to the user
 
     return 0;
 }
