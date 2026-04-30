@@ -97,9 +97,14 @@ void TravelAgency::SummarizeReviewsMenu() {
         int subChoice;
         cin >> subChoice;
         switch (subChoice) {
-            case 1:
-                cout << "TODO: Implement hotel review summary" << endl;
+            case 1: {
+                // Placeholder: Implement enter hotel name and summarize reviews
+                cout << "TODO Enter hotel name: ";
+                string hotelName;
+                cin >> hotelName;
+                // Add logic to summarize reviews for the hotel
                 break;
+            }
             case 2:
                 exitSub = true;
                 break;
@@ -144,12 +149,22 @@ void TravelAgency::SearchReviewsMenu() {
         int subChoice;
         cin >> subChoice;
         switch (subChoice) {
-            case 1:
-                cout << "TODO: Implement search by hotel" << endl;
+            case 1: {
+                // Placeholder: Implement search by hotel
+                cout << " TODO Enter hotel name to search: ";
+                string hotelName;
+                cin >> hotelName;
+                // Add logic to search reviews by hotel
                 break;
-            case 2:
-                cout << "TODO: Implement search by rating" << endl;
+            }
+            case 2: {
+                // Placeholder: Implement search by rating
+                cout << "TODO Enter rating to search: ";
+                int rating;
+                cin >> rating;
+                // Add logic to search reviews by rating
                 break;
+            }
             case 3:
                 exitSub = true;
                 break;
@@ -169,7 +184,9 @@ void TravelAgency::TopTravelersMenu() {
         cin >> subChoice;
         switch (subChoice) {
             case 1:
-                cout << "TODO: Implement top travelers sorting" << endl;
+                // Placeholder: Implement view top travelers
+                cout << "Displaying top travelers..." << endl;
+                // Add logic to display top travelers
                 break;
             case 2:
                 exitSub = true;
