@@ -6,6 +6,11 @@
 //call that function in main or other files, but i will not implement any friend function in main.cpp
 
 #include <iostream>
+#include <string>
+#include <fstream>
+
+#include "review.h"
+#include "travelor.h"
 #include "hotel.h"
 #include "TravelAgency.h"
 using namespace std;

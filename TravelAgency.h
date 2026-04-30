@@ -23,15 +23,14 @@ private:
     Person travelers[MAX_TRAVELERS];
 
 public:
-    void menu();
+    TravelAgency(){}
+    TravelAgency(const string& name): agencyName(name), hotelCount(0){}
+    void Menu();
     void SummarizeReviewsMenu();
     void ManageTravelerProfileMenu();
     void SearchReviewsMenu();
     void TopTravelersMenu();
-    void readFile();
-    void saveFile();
-    TravelAgency(){}
-    TravelAgency(const string& name): agencyName(name), hotelCount(0), travelerCount(0){}
+
 
 };
 
@@ -103,6 +102,7 @@ void TravelAgency::SummarizeReviewsMenu() {
                 string hotelName;
                 cin >> hotelName;
                 // Add logic to summarize reviews for the hotel
+                generateReport(Hotel(hotelName)); 
                 break;
             }
             case 2:
