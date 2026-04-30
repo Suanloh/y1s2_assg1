@@ -13,10 +13,11 @@ private:
 
 public:
     Review():reviewID(""), rate(0), comment(""), hotelName(""){};
-    Review(const string& reviewID,
-           int rate,
-           const string& comment,
-           const string& hotelName):reviewID(reviewID), rate(rate), comment(comment), hotelName(hotelName){};
+    Review(const string& rvID,
+           int rt,
+           const string& cm,
+           const string& htName)
+           :reviewID(rvID), rate(rt), comment(cm), hotelName(htName){};
 
     string getReviewID() const{
         return reviewID;
@@ -40,6 +41,8 @@ public:
         }
         else this->rate = rate;
     }; 
+
+    
 };
 
 #endif
