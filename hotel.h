@@ -61,4 +61,21 @@ public:
     friend void generateReport(const Hotel& hotel);
 };
 
+// this friend function should put in hotel.h, not hotel.cpp. I dunno why but it will cause error if i put it in hotel.cpp, so i just put it here.
+void generateReport(const Hotel& hotel){
+    cout << "Hotel Name: " << hotel.hotelName << endl;
+    cout << "Average Rating: " << hotel.averageRating() << endl;
+    cout << "Total Reviews: " << hotel.reviewCount << endl;
+    cout << "Reviews:" << endl;
+
+    for(int i = 0; i < hotel.reviewCount; i++){
+        cout << "Review ID: " << hotel.rv[i].getReviewID() 
+             << ", Rating: " << hotel.rv[i].getRate() 
+             << ", Comment: " << hotel.rv[i].getComment() 
+             << ", Hotel Name: " << hotel.rv[i].getHotelName() 
+             << endl;
+    }
+}
+
+
 #endif
