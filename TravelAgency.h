@@ -5,14 +5,14 @@
 // TODO: person.h needs to have the following attributes to support readFile():
 //       - country, state, email, userLevel, score (getters and setters)
 //       - Constructor: Person(userID, username, country, state, email, userLevel, score)
-#include "person.h"
+#include "travelor.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
-const int MAX_HOTELS = 10;
-const int MAX_TRAVELERS = 10;
+const int MAX_HOTELS = 50;
+const int MAX_TRAVELERS = 100; 
 
 class TravelAgency {
 private:
@@ -20,7 +20,7 @@ private:
     int hotelCount;
     int travelerCount;
     Hotel hotels[MAX_HOTELS];
-    Person travelers[MAX_TRAVELERS];
+    Travelor travelers[MAX_TRAVELERS];
 
 public:
     TravelAgency(){}
@@ -33,6 +33,32 @@ public:
 
     void readFile();
     void saveFile();
+
+    //helper function
+    int findhotelIndexByName(const string& name) {
+        for (int i = 0; i < hotelCount; i++) {
+            if (hotels[i].getHotelName() == name) {
+                return i;
+            }
+        }
+        return -1; // Not found
+    }
+    int findNamebyID(const string &id){
+        for(int i=0;i<travelerCount;i++){
+            if (travelers[i].getUserID() == id){
+                return i;
+            }
+        }
+        return -1;
+    }
+    int findIDbyName(const string &nm){
+        for(int i=0;i<travelerCount;i++){
+            if (travelers[i].getUsername() == nm){
+                return i;
+            }
+        }
+        return -1;
+    }
 
 };
 
@@ -100,11 +126,16 @@ void TravelAgency::SummarizeReviewsMenu() {
         switch (subChoice) {
             case 1: {
                 // Placeholder: Implement enter hotel name and summarize reviews
-                cout << "TODO Enter hotel name: ";
+                cout << "Enter hotel name: ";
                 string hotelName;
-                cin >> hotelName;
-                // Add logic to summarize reviews for the hotel
-                generateReport(Hotel(hotelName)); //not like this, future solve
+                cin.ignore();
+                getline(cin,hotelName);
+                int tempInd = findhotelIndexByName(hotelName);
+                if (tempInd == -1){
+                    cout<<"Hotel not found, please try again the name\n";
+                    return;
+                }
+                else generateReport(hotels[tempInd]);
                 break;
             }
             case 2:
@@ -126,20 +157,50 @@ void TravelAgency::ManageTravelerProfileMenu() {
         int subChoice;
         cin >> subChoice;
         switch (subChoice) {
-            case 1:
-                cout << "TODO: Implement view profile" << endl;
+
+            case 1:{
+                cout << "TODO: Implement view profile\n=============================================" << endl;
+                cout<<"enter travelor name or travelor user ID?\n 1. user full name \n 2. user ID"<<endl;
+                int inputT;
+                string inputInfo1;
+                cin>> inputT;
+                    if (inputT ==1){
+                        cout<<"Enter user name: ";
+                        cin.ignore();
+                        getline(cin,inputInfo1);
+                        int ind= findIDbyName(inputInfo1);
+                        printProfile(travelers[ind]);
+                    }
+
+                    else if (inputT ==2){
+                        cout<<"Enter user ID: ";
+                        cin>>inputInfo1;
+                        int ind= findNamebyID(inputInfo1);
+                        printProfile(travelers[ind]);
+                    } 
+                    else {
+                        cout<<"Invalid input, please try again\n";
+                        return;
+                    }
+            }
                 break;
-            case 2:
+
+            case 2:{
                 cout << "TODO: Implement edit profile" << endl;
+            }
                 break;
-            case 3:
+
+            case 3:{
                 exitSub = true;
+            }
                 break;
+
             default:
                 cout << "Invalid option. Please try again." << endl;
-        }
+        }//end switch
     } while (!exitSub);
 }
+
 
 void TravelAgency::SearchReviewsMenu() {
     bool exitSub = false;

@@ -14,7 +14,9 @@ class Travelor:public Person{
     
     public:
         Travelor ():Person(), country(""), state(""), email(""), userLevel(""), score(0){};
-        Travelor (const string &userID, const string &username, const string &country, const string &state, const string &email, const string &userLevel, int score):Person(userID, username), country(country), state(state), email(email), userLevel(userLevel), score(score){};
+        Travelor (const string &userID, const string &username, const string &country, const string &state, 
+            const string &email, const string &userLevel, int score)
+            :Person(userID, username), country(country), state(state), email(email), userLevel(userLevel), score(score){};
 
         string getCountry() const{
             return country;
@@ -51,6 +53,16 @@ class Travelor:public Person{
             else this->score = score;
         };
 
+        //shower function for traveler profile
+        void printProfile(const Travelor& t) {};
 };
-
+void Travelor::printProfile(const Travelor& t) {
+    cout<<"UserID: "<<t.getUserID()<<endl;
+    cout<<"Username: "<<t.getUsername()<<endl;
+    cout<<"Country: "<<t.getCountry()<<endl;
+    cout<<"State: "<<t.getState()<<endl;
+    cout<<"Email: "<<t.getEmail()<<endl;
+    cout<<"User Level: "<<t.getUserLevel()<<endl;
+    cout<<"Score: "<<t.getScore()<<endl;
+}
 #endif
