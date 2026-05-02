@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 #include "person.h"
+using namespace std;
+
 
 class Travelor:public Person{
     private:
@@ -54,15 +56,16 @@ class Travelor:public Person{
         };
 
         //shower function for traveler profile
-        void printProfile(const Travelor& t) {};
+        void printProfile()const {};
 };
-void Travelor::printProfile(const Travelor& t) {
-    cout<<"UserID: "<<t.getUserID()<<endl;
-    cout<<"Username: "<<t.getUsername()<<endl;
-    cout<<"Country: "<<t.getCountry()<<endl;
-    cout<<"State: "<<t.getState()<<endl;
-    cout<<"Email: "<<t.getEmail()<<endl;
-    cout<<"User Level: "<<t.getUserLevel()<<endl;
-    cout<<"Score: "<<t.getScore()<<endl;
+void Travelor::printProfile()const {
+    cout<<"UserID: "<<getUserID()<<endl;
+    cout<<"Username: "<<getUsername()<<endl;
+    cout<<"Country: "<<getCountry()<<endl;
+    cout<<"State: "<<getState()<<endl;
+    cout<<"Email: "<<getEmail()<<endl;
+    cout<<"User Level: "<<getUserLevel()<<endl;
+    cout<<"Score: "<<getScore()<<endl;
 }
+
 #endif

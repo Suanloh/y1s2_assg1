@@ -23,8 +23,8 @@ private:
     Travelor travelers[MAX_TRAVELERS];
 
 public:
-    TravelAgency(){}
-    TravelAgency(const string& name): agencyName(name), hotelCount(0){}
+    TravelAgency(): agencyName(""), hotelCount(0), travelerCount(0){}
+    TravelAgency(const string& name): agencyName(name), hotelCount(0), travelerCount(0){}
     void menu();
     void SummarizeReviewsMenu();
     void ManageTravelerProfileMenu();
@@ -43,23 +43,35 @@ public:
         }
         return -1; // Not found
     }
-    int findNamebyID(const string &id){
-        for(int i=0;i<travelerCount;i++){
-            if (travelers[i].getUserID() == id){
-                return i;
-            }
-        }
-        return -1;
-    }
-    int findIDbyName(const string &nm){
-        for(int i=0;i<travelerCount;i++){
-            if (travelers[i].getUsername() == nm){
-                return i;
-            }
-        }
-        return -1;
-    }
 
+    int findTravelorIndex(){
+        cout<<"enter travelor name or travelor user ID?\n 1. user full name \n 2. user ID"<<endl;
+            int inputT;
+            string inputInfo1;
+            cin>> inputT;
+            if (inputT ==1){
+                cout<<"Enter user name: ";
+                cin.ignore();
+                getline(cin,inputInfo1);
+                for (int i=0;i<travelerCount; i++){
+                    if (travelers[i].getUsername()==inputInfo1)return i;
+                    else return -1;//notfound
+                }
+                    }
+
+            else if (inputT ==2){
+                cout<<"Enter user ID: ";
+                cin.ignore();
+                cin>>inputInfo1;
+                for(int i=0;i<travelerCount;i++){
+                    if (travelers[i].getUserID() == inputInfo1) return i; 
+                    else return -1;
+                }}
+            else {
+                cout<<"Invalid input, please try again\n";
+                return;
+                    }   
+    }
 };
 
 void TravelAgency::menu() {
@@ -128,7 +140,7 @@ void TravelAgency::SummarizeReviewsMenu() {
                 // Placeholder: Implement enter hotel name and summarize reviews
                 cout << "Enter hotel name: ";
                 string hotelName;
-                cin.ignore();
+                cin.ignore(1000, '\n'); // Clear input buffer
                 getline(cin,hotelName);
                 int tempInd = findhotelIndexByName(hotelName);
                 if (tempInd == -1){
@@ -160,33 +172,28 @@ void TravelAgency::ManageTravelerProfileMenu() {
 
             case 1:{
                 cout << "TODO: Implement view profile\n=============================================" << endl;
-                cout<<"enter travelor name or travelor user ID?\n 1. user full name \n 2. user ID"<<endl;
-                int inputT;
-                string inputInfo1;
-                cin>> inputT;
-                    if (inputT ==1){
-                        cout<<"Enter user name: ";
-                        cin.ignore();
-                        getline(cin,inputInfo1);
-                        int ind= findIDbyName(inputInfo1);
-                        printProfile(travelers[ind]);
+                    int ind = findTravelorIndex();
+                    if (ind == -1){
+                        cout<<"Invalid info, please check again for the info"<<endl;
+                        break;
                     }
+                    travelers[ind].printProfile();
 
-                    else if (inputT ==2){
-                        cout<<"Enter user ID: ";
-                        cin>>inputInfo1;
-                        int ind= findNamebyID(inputInfo1);
-                        printProfile(travelers[ind]);
-                    } 
-                    else {
-                        cout<<"Invalid input, please try again\n";
-                        return;
+                    char choice; bool validchoice=false;
+                    while (!validchoice){
+                        cout<<"Check for other profile?: (Y/n)"; 
+                        cin >> choice;
+                        if (choice == 'Y' || choice == 'y') validchoice=true;
+                        else if (choice == 'N' || choice == 'n') validchoice = true;
+                        else cout<<"Invalid input, please enter Y or N\n";
                     }
-            }
+                }
                 break;
 
             case 2:{
-                cout << "TODO: Implement edit profile" << endl;
+                cout << "TODO: Implement edit profile\n=============================================" << endl;
+                int ind =findTravelorIndex();
+                
             }
                 break;
 
