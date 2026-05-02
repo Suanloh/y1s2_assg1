@@ -16,14 +16,16 @@
 using namespace std;
 
 int main() {
-    string jibet = "Jibet Hotel";
+    /* string jibet = "Jibet Hotel";
     Hotel h1(jibet);
     generateReport(h1); // Call the friend function to generate the report for h1
-
+    */
+    // my IDE is very weak ah, I use heap to create the TravelAgency object to avoid stack overflow, but in real life we can just create it on stack
     string agencyName = "Global Explorer";
-    TravelAgency agency(agencyName);
-    agency.readFile(); // Call the readFile function to load data from files (currently a placeholder)
-    agency.menu(); // Call the menu function to display options to the user
+    TravelAgency* agency = new TravelAgency(agencyName); 
+    agency->menu(); 
+
+    delete agency; // Don't forget to free the memory!
 
     return 0;
 }

@@ -7,12 +7,15 @@
 //       - Constructor: Person(userID, username, country, state, email, userLevel, score)
 #include "travelor.h"
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 using namespace std;
 
-const int MAX_HOTELS = 50;
-const int MAX_TRAVELERS = 100; 
+const int MAX_HOTELS = 100;
+const int MAX_TRAVELERS = 100;
+
+void print_symbol(char, int); // func prototype
 
 class TravelAgency {
 private:
@@ -72,13 +75,21 @@ public:
                 return;
                     }   
     }
+    // int split(string line, string arr[], int maxParts);
+  //check for future purpose
 };
 
 void TravelAgency::menu() {
+    cout << "\ndebug: Entering menu function in TravelAgency class" << endl;
+    cout << "Maximum hotels allowed: " << MAX_HOTELS << endl;
+    cout << "Maximum travelers allowed: " << MAX_TRAVELERS << endl;
+    cout << endl;
     bool running = true;
+    cout << "\nWelcome to " << agencyName << " Travel Agency!" << endl;
     do {
-        cout << "Welcome to " << agencyName << " Travel Agency!" << endl;
-        cout << "Please select an option:" << endl;
+        print_symbol('=', 34);
+        cout << setw(28) << "Please select an option:" << endl;
+        print_symbol('=', 34);
         cout << "1. Summarize all reviews for a specific hotel." << endl;
         cout << "2. Manage Traveler Profile" << endl;
         cout << "3. Search reviews" << endl;
@@ -88,7 +99,7 @@ void TravelAgency::menu() {
 
         int choice;
         cin >> choice;
-
+        cout << endl;
         switch (choice) {
             case 1:
                 SummarizeReviewsMenu();
@@ -113,12 +124,61 @@ void TravelAgency::menu() {
 }
 
 void TravelAgency::readFile() {
-    // TODO: Implement traveler reading once Person.h is updated
-    // Placeholder: Skip traveler file reading
-    
-    // TODO: Implement review parsing
-    // Placeholder: Skip review file reading
-    cout << "TODO: Implement file reading for hotels, travelers, and reviews" << endl;
+
+    // ---------- LOAD HOTELS ----------
+    ifstream hFile("hotels.txt");
+
+    if (!hFile) {
+        cout << "Error: Cannot open hotels.txt\n";
+    } else {
+        hotelCount = 0;
+
+        string id, name;
+
+        while (hFile >> id >> name) {
+            if (hotelCount >= MAX_HOTELS) {
+                cout << "Hotel array full\n";
+                break;
+            }
+
+            hotels[hotelCount] = Hotel(name);
+            hotelCount++;
+        }
+
+        cout << "Hotels loaded: " << hotelCount << endl;
+    }
+
+
+    // ---------- LOAD TRAVELERS ----------
+    ifstream tFile("travelers.txt");
+
+    if (!tFile) {
+        cout << "Error: Cannot open travelers.txt\n";
+    } else {
+        travelerCount = 0;
+
+        string id, name, country, state, email, level;
+        int score;
+
+        while (tFile >> id >> name >> country >> state >> email >> level >> score) {
+            if (travelerCount >= MAX_TRAVELERS) {
+                cout << "Traveler array full\n";
+                break;
+            }
+
+            travelers[travelerCount] = Person(id, name);
+
+            travelerCount++;
+        }
+
+        cout << "Travelers loaded: " << travelerCount << endl;
+    }
+
+
+    // ---------- REVIEWS ----------
+    cout << "Reviews loading not implemented yet\n";
+
+    cout << "\nAll data loading completed.\n";
 }
 
 void TravelAgency::saveFile() {
@@ -127,14 +187,39 @@ void TravelAgency::saveFile() {
     cout << "TODO: Implement file saving for hotels, travelers, and reviews" << endl;
 }
 
+int TravelAgency::split(string line, string arr[], int maxParts) {
+    int count = 0;
+    string temp = "";
+
+    for (int i = 0; i < line.length(); i++) {
+        if (line[i] == '\t') {
+            if (count < maxParts) {
+                arr[count++] = temp;
+                temp = "";
+            }
+        } else {
+            temp += line[i];
+        }
+    }
+
+    if (count < maxParts) {
+        arr[count++] = temp;
+    }
+
+    return count;
+}
+
 void TravelAgency::SummarizeReviewsMenu() {
     bool exitSub = false;
     do {
-        cout << "Summarize Reviews Sub-Menu" << endl;
+        print_symbol('=', 34);
+        cout << setw(28) << "Summarize Reviews Sub-Menu" << endl;
+        print_symbol('=', 34);
         cout << "1. Enter hotel name" << endl;
         cout << "2. Back to main menu" << endl;
         int subChoice;
         cin >> subChoice;
+        cout << endl;
         switch (subChoice) {
             case 1: {
                 // Placeholder: Implement enter hotel name and summarize reviews
@@ -162,12 +247,15 @@ void TravelAgency::SummarizeReviewsMenu() {
 void TravelAgency::ManageTravelerProfileMenu() {
     bool exitSub = false;
     do {
-        cout << "Manage Traveler Profile Sub-Menu" << endl;
+        print_symbol('=', 34);
+        cout << setw(28) << "Manage Traveler Profile Sub-Menu" << endl;
+        print_symbol('=', 34);
         cout << "1. View profile" << endl;
         cout << "2. Edit profile" << endl;
         cout << "3. Back to main menu" << endl;
         int subChoice;
         cin >> subChoice;
+        cout << endl;
         switch (subChoice) {
 
             case 1:{
@@ -212,12 +300,15 @@ void TravelAgency::ManageTravelerProfileMenu() {
 void TravelAgency::SearchReviewsMenu() {
     bool exitSub = false;
     do {
-        cout << "Search Reviews Sub-Menu" << endl;
+        print_symbol('=', 34);
+        cout << setw(28) << "Search Reviews Sub-Menu" << endl;
+        print_symbol('=', 34);
         cout << "1. Search by hotel" << endl;
         cout << "2. Search by rating" << endl;
         cout << "3. Back to main menu" << endl;
         int subChoice;
         cin >> subChoice;
+        cout << endl;
         switch (subChoice) {
             case 1: {
                 // Placeholder: Implement search by hotel
@@ -247,11 +338,15 @@ void TravelAgency::SearchReviewsMenu() {
 void TravelAgency::TopTravelersMenu() {
     bool exitSub = false;
     do {
-        cout << "Top Travelers Sub-Menu" << endl;
+        print_symbol('=', 34);
+        cout << setw(28) << "Top Travelers Sub-Menu" << endl;
+        print_symbol('=', 34)
+        ;
         cout << "1. View top travelers" << endl;
         cout << "2. Back to main menu" << endl;
         int subChoice;
         cin >> subChoice;
+        cout << endl;
         switch (subChoice) {
             case 1:
                 // Placeholder: Implement view top travelers
@@ -266,5 +361,13 @@ void TravelAgency::TopTravelersMenu() {
         }
     } while (!exitSub);
 }
+
+void print_symbol(char symbol, int count) {
+    for (int i = 0; i < count; i++) {
+        cout << symbol;
+    }
+    cout << endl;
+}
+
 
 #endif // TRAVELAGENCY_H
