@@ -269,8 +269,9 @@ void TravelAgency::ManageTravelerProfileMenu() {
                         break;
                     }
                     travelers[ind].printProfile();
-                    travelers[ind].showUserReview(travelers[ind]);
-
+                    for (int i = 0; i < hotelCount; i++) {
+                        hotels[i].showUserReview(travelers[ind]);
+                    }
                     char choice; bool validchoice=false;
                     while (!validchoice){
                         cout<<"Check for other profile?: (Y/n)"; 
