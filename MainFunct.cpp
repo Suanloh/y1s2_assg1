@@ -15,6 +15,21 @@
 #include "TravelAgency.h"
 using namespace std;
 
+void generateReport(const Hotel& h){
+    cout << "Hotel Name: " << h.hotelName << endl;
+    cout << "Average Rating: " << h.averageRating() << endl;
+    cout << "Total Reviews: " << h.reviewCount << endl;
+    cout << "Reviews:" << endl;
+
+    for(int i = 0; i < h.reviewCount; i++){
+        cout << "Review ID: " << h.rv[i].getReviewID() 
+             << ", Rating: " << h.rv[i].getRate() 
+             << ", Comment: " << h.rv[i].getComment() 
+             << ", Hotel Name: " << h.rv[i].getHotelName() 
+             << endl;
+    }
+}
+
 int main() {
     // ===== 1) Create some travelers (from your user.txt format) =====
     Travelor t1("U001", "Ali", "Malaysia", "Selangor", "ali@gmail.com", "Silver", 1200);

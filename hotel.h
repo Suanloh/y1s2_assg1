@@ -59,7 +59,9 @@ public:
         return this->hotelName > rhs.hotelName;
     }
     
-    friend void generateReport(const Hotel& hotel);
+    //friend function, declare inside MF
+    friend void generateReport(const Hotel& h);
+
     void showUserReview(const Person& p) const {
         // URGENT: This need to be recheck again!
     bool found = false;
