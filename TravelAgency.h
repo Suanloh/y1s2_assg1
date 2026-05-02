@@ -33,7 +33,7 @@ public:
 
     void readFile();
     void saveFile();
-
+    int split(string line, string arr[], int maxParts);
 };
 
 void TravelAgency::menu() {
@@ -75,18 +75,89 @@ void TravelAgency::menu() {
 }
 
 void TravelAgency::readFile() {
-    // TODO: Implement traveler reading once Person.h is updated
-    // Placeholder: Skip traveler file reading
-    
-    // TODO: Implement review parsing
-    // Placeholder: Skip review file reading
-    cout << "TODO: Implement file reading for hotels, travelers, and reviews" << endl;
+
+    // ---------- LOAD HOTELS ----------
+    ifstream hFile("hotels.txt");
+
+    if (!hFile) {
+        cout << "Error: Cannot open hotels.txt\n";
+    } else {
+        hotelCount = 0;
+
+        string id, name;
+
+        while (hFile >> id >> name) {
+            if (hotelCount >= MAX_HOTELS) {
+                cout << "Hotel array full\n";
+                break;
+            }
+
+            hotels[hotelCount] = Hotel(name);
+            hotelCount++;
+        }
+
+        cout << "Hotels loaded: " << hotelCount << endl;
+    }
+
+
+    // ---------- LOAD TRAVELERS ----------
+    ifstream tFile("travelers.txt");
+
+    if (!tFile) {
+        cout << "Error: Cannot open travelers.txt\n";
+    } else {
+        travelerCount = 0;
+
+        string id, name, country, state, email, level;
+        int score;
+
+        while (tFile >> id >> name >> country >> state >> email >> level >> score) {
+            if (travelerCount >= MAX_TRAVELERS) {
+                cout << "Traveler array full\n";
+                break;
+            }
+
+            travelers[travelerCount] = Person(id, name);
+
+            travelerCount++;
+        }
+
+        cout << "Travelers loaded: " << travelerCount << endl;
+    }
+
+
+    // ---------- REVIEWS ----------
+    cout << "Reviews loading not implemented yet\n";
+
+    cout << "\nAll data loading completed.\n";
 }
 
 void TravelAgency::saveFile() {
     // TODO: Implement save to file once data structure is complete
     // Placeholder: Skip file saving for now
     cout << "TODO: Implement file saving for hotels, travelers, and reviews" << endl;
+}
+
+int TravelAgency::split(string line, string arr[], int maxParts) {
+    int count = 0;
+    string temp = "";
+
+    for (int i = 0; i < line.length(); i++) {
+        if (line[i] == '\t') {
+            if (count < maxParts) {
+                arr[count++] = temp;
+                temp = "";
+            }
+        } else {
+            temp += line[i];
+        }
+    }
+
+    if (count < maxParts) {
+        arr[count++] = temp;
+    }
+
+    return count;
 }
 
 void TravelAgency::SummarizeReviewsMenu() {
