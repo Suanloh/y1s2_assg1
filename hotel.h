@@ -3,6 +3,7 @@
 
 #include <string>
 #include "review.h"
+#include "person.h"
 using namespace std;
 
 const int MAX_REVIEW_HOTELS = 200;
@@ -58,24 +59,31 @@ public:
         return this->hotelName > rhs.hotelName;
     }
     
-    friend void generateReport(const Hotel& hotel);
+    //friend function, declare inside MF
+    friend void generateReport(const Hotel& h);
+
+    void showUserReview(const Person& p) const {
+        // URGENT: This need to be recheck again!
+    bool found = false;
+
+    for (int i = 0; i < reviewCount; i++) {
+        if (rv[i].getReviewID() == p.getUserID()) {
+            found = true;
+            cout << "Hotel: " << hotelName
+                 << " | ReviewID: " << rv[i].getReviewID()
+                 << " | Rating: " << rv[i].getRate()
+                 << " | Comment: " << rv[i].getComment()
+                 << "\n";
+        }
+    }
+
+    if (!found) {
+        cout << "No reviews by user " << p.getUserID()
+             << " for hotel " << hotelName << ".\n";
+    }
+}
 };
 
 // this friend function should put in hotel.h, not hotel.cpp. I dunno why but it will cause error if i put it in hotel.cpp, so i just put it here.
-void generateReport(const Hotel& hotel){
-    cout << "Hotel Name: " << hotel.hotelName << endl;
-    cout << "Average Rating: " << hotel.averageRating() << endl;
-    cout << "Total Reviews: " << hotel.reviewCount << endl;
-    cout << "Reviews:" << endl;
-
-    for(int i = 0; i < hotel.reviewCount; i++){
-        cout << "Review ID: " << hotel.rv[i].getReviewID() 
-             << ", Rating: " << hotel.rv[i].getRate() 
-             << ", Comment: " << hotel.rv[i].getComment() 
-             << ", Hotel Name: " << hotel.rv[i].getHotelName() 
-             << endl;
-    }
-}
-
 
 #endif

@@ -15,17 +15,61 @@
 #include "TravelAgency.h"
 using namespace std;
 
-int main() {
-    /* string jibet = "Jibet Hotel";
-    Hotel h1(jibet);
-    generateReport(h1); // Call the friend function to generate the report for h1
-    */
-    // my IDE is very weak ah, I use heap to create the TravelAgency object to avoid stack overflow, but in real life we can just create it on stack
-    string agencyName = "Global Explorer";
-    TravelAgency* agency = new TravelAgency(agencyName); 
-    agency->menu(); 
+void generateReport(const Hotel& h){
+    cout << "Hotel Name: " << h.hotelName << endl;
+    cout << "Average Rating: " << h.averageRating() << endl;
+    cout << "Total Reviews: " << h.reviewCount << endl;
+    cout << "Reviews:" << endl;
 
-    delete agency; // Don't forget to free the memory!
+    for(int i = 0; i < h.reviewCount; i++){
+        cout << "Review ID: " << h.rv[i].getReviewID() 
+             << ", Rating: " << h.rv[i].getRate() 
+             << ", Comment: " << h.rv[i].getComment() 
+             << ", Hotel Name: " << h.rv[i].getHotelName() 
+             << endl;
+    }
+}
+
+int main() {
+    // ===== 1) Create some travelers (from your user.txt format) =====
+    Travelor t1("U001", "Ali", "Malaysia", "Selangor", "ali@gmail.com", "Silver", 1200);
+    Travelor t2("U004", "Nur Aisyah", "Malaysia", "Sabah", "aisyah.sabah@hotmail.com", "Silver", 3400);
+
+    cout << "=== Traveler profile test ===\n";
+    t1.printProfile();   // matches your current travelor.h signature
+    cout << "-----------------------------\n";
+    t2.printProfile();
+
+    // ===== 2) Create a hotel =====
+    Hotel h1("Grand Imperial Hotel");
+
+    // ===== 3) Create reviews (from your review.txt format) =====
+    // review.txt line: U001  5  Excellent service and clean room  Grand Imperial Hotel
+    Review r1("U001", 5, "Excellent service and clean room", "Grand Imperial Hotel");
+    Review r2("U004", 4, "Nice location but the room is small", "Grand Imperial Hotel");
+    Review r3("U001", 3, "Average breakfast, staff friendly", "Grand Imperial Hotel");
+
+    // Attach reviews to the hotel (this is what readFile() would normally do)
+    h1.addReview(r1);
+    h1.addReview(r2);
+    h1.addReview(r3);
+
+    // ===== 4) Test generateReport(friend) =====
+    cout << "\n=== generateReport(h1) test ===\n";
+    generateReport(h1);
+
+    // ===== 5) Test showUserReview (if you implemented Option A: Review has getUserID) =====
+    // If your Review class still uses getReviewID() to store userID, adjust accordingly.
+    cout << "\n=== showUserReview tests ===\n";
+    cout << "[Reviews by U001]\n";
+    h1.showUserReview(t1);
+
+    cout << "\n[Reviews by U004]\n";
+    h1.showUserReview(t2);
+
+    // ===== 6) Optional: start TA menu (will only work if TA has data loaded/hardcoded) =====
+    // TravelAgency ta("TestAgency");
+    // ta.Menu();
 
     return 0;
 }
