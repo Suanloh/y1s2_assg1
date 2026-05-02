@@ -2,10 +2,9 @@
 #define TRAVELAGENCY_H
 
 #include "hotel.h"
-// TODO: person.h needs to have the following attributes to support readFile():
-//       - country, state, email, userLevel, score (getters and setters)
-//       - Constructor: Person(userID, username, country, state, email, userLevel, score)
 #include "travelor.h"
+#include "review.h"
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -47,32 +46,37 @@ public:
         return -1; // Not found
     }
 
-    int findTravelorIndex(){
-        cout<<"enter travelor name or travelor user ID?\n 1. user full name \n 2. user ID"<<endl;
-            int inputT;
-            string inputInfo1;
-            cin>> inputT;
-            while (inputT != 1 && inputT != 2){
-                cout<<"Invalid input, please try again\n";
-                cin>>inputT;
-            }
-            if (inputT ==1){
-                cout<<"Enter user name: ";
-                cin.ignore();
-                getline(cin,inputInfo1);
-                for (int i=0;i<travelerCount; i++){
-                    if (travelers[i].getUsername()==inputInfo1)return i;
-                }
-            }
+    int findTravelorIndex() {
+        cout << "enter travelor name or travelor user ID?\n 1. user full name \n 2. user ID\n";
+        int inputT;
+        cin >> inputT;
 
-            else {
-                cout<<"Enter user ID: ";
-                cin>>inputInfo1;
-                for(int i=0;i<travelerCount;i++){
-                    if (travelers[i].getUserID() == inputInfo1) return i; 
-                }
+        while (inputT != 1 && inputT != 2) {
+            cout << "Invalid input, please try again\n";
+            cin >> inputT;
+        }
+
+        string inputInfo1;
+
+        if (inputT == 1) {
+            cout << "Enter user name: ";
+            cin.ignore(1000, '\n');
+            getline(cin, inputInfo1);
+
+            for (int i = 0; i < travelerCount; i++) {
+                if (travelers[i].getUsername() == inputInfo1) return i;
             }
-        return -1;} // Not found
+        } else { // inputT == 2
+            cout << "Enter user ID: ";
+            cin >> inputInfo1;
+
+            for (int i = 0; i < travelerCount; i++) {
+                if (travelers[i].getUserID() == inputInfo1) return i;
+            }
+        }
+
+        return -1;
+    }
 };
     // int split(string line, string arr[], int maxParts);
   //check for future purpose
@@ -186,28 +190,28 @@ void TravelAgency::saveFile() {
     cout << "TODO: Implement file saving for hotels, travelers, and reviews" << endl;
 }
 
-// // int TravelAgency::split(string line, string arr[], int maxParts) {
-//     int count = 0;
-//     string temp = "";
+/* int TravelAgency::split(string line, string arr[], int maxParts) {
+    int count = 0;
+    string temp = "";
 
-//     for (int i = 0; i < line.length(); i++) {
-//         if (line[i] == '\t') {
-//             if (count < maxParts) {
-//                 arr[count++] = temp;
-//                 temp = "";
-//             }
-//         } else {
-//             temp += line[i];
-//         }
-//     }
+    for (int i = 0; i < line.length(); i++) {
+        if (line[i] == '\t') {
+            if (count < maxParts) {
+                arr[count++] = temp;
+                temp = "";
+            }
+        } else {
+            temp += line[i];
+        }
+    }
 
-//     if (count < maxParts) {
-//         arr[count++] = temp;
-//     }
+    if (count < maxParts) {
+        arr[count++] = temp;
+    }
 
-//     return count;
-// }
-
+    return count;
+}
+*/
 void TravelAgency::SummarizeReviewsMenu() {
     bool exitSub = false;
     do {
@@ -265,6 +269,7 @@ void TravelAgency::ManageTravelerProfileMenu() {
                         break;
                     }
                     travelers[ind].printProfile();
+                    travelers[ind].showUserReview(travelers[ind]);
 
                     char choice; bool validchoice=false;
                     while (!validchoice){
@@ -279,10 +284,10 @@ void TravelAgency::ManageTravelerProfileMenu() {
 
             case 2:{
                 cout << "Implement edit profile\n=============================================" << endl;
-                int ind =findTravelorIndex();
-                cout<<"Current profile is:\n";
+                int ind = findTravelorIndex();
+                if (ind == -1) { cout << "User not found\n"; break; }
                 travelers[ind].printProfile();
-                
+                travelers[ind].editprofile();
             }
                 break;
 
@@ -296,7 +301,6 @@ void TravelAgency::ManageTravelerProfileMenu() {
         }//end switch
     } while (!exitSub);
 }
-
 
 void TravelAgency::SearchReviewsMenu() {
     bool exitSub = false;
@@ -334,7 +338,7 @@ void TravelAgency::SearchReviewsMenu() {
                 cout << "Invalid option. Please try again." << endl;
         }
     } while (!exitSub);
-}
+}//no done yet
 
 void TravelAgency::TopTravelersMenu() {
     bool exitSub = false;

@@ -3,6 +3,7 @@
 
 #include <string>
 #include "review.h"
+#include "person.h"
 using namespace std;
 
 const int MAX_REVIEW_HOTELS = 200;
@@ -59,6 +60,7 @@ public:
     }
     
     friend void generateReport(const Hotel& hotel);
+    void showUserReview(Person const& p) const{};
 };
 
 // this friend function should put in hotel.h, not hotel.cpp. I dunno why but it will cause error if i put it in hotel.cpp, so i just put it here.
@@ -77,5 +79,15 @@ void generateReport(const Hotel& hotel){
     }
 }
 
+void Hotel::showUserReview(Person const& p) const{
+    for(int i = 0; i < reviewCount; i++){
+        if (rv[i].getReviewID()==p.getUserID()){
 
+        cout<<"Hotel Name: "<<hotelName<<endl;
+        cout<<"Average Rating: "<<averageRating()<<endl;
+        cout<<"Total Reviews: "<<reviewCount<<endl;
+        cout<<"\n"<<endl;
+        }
+    }
+};
 #endif

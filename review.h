@@ -2,6 +2,8 @@
 #define REVIEW_H
 
 #include <string>
+#include <iostream>
+#include "person.h"
 using namespace std;
 
 class Review {
@@ -40,9 +42,8 @@ public:
             this->rate = 5;
         }
         else this->rate = rate;
-    }; 
-
+    };
     
 };
 
-#endif
+#endif;

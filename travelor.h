@@ -2,6 +2,7 @@
 #define TRAVELOR_H
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include "person.h"
 using namespace std;
 
@@ -56,10 +57,11 @@ class Travelor:public Person{
         };
 
         //shower function for traveler profile
-        void printProfile()const {};
-        void editprofile(){};// return true if edit successfully, otherwise return false
+        void printProfile()const ;
+        void editprofile();// return true if edit successfully, otherwise return false
 };
 void Travelor::printProfile()const {
+    cout<<"Travelor Profile:\n============================================="<<endl;
     cout<<"UserID: "<<getUserID()<<endl;
     cout<<"Username: "<<getUsername()<<endl;
     cout<<"Country: "<<getCountry()<<endl;
@@ -72,9 +74,7 @@ void Travelor::printProfile()const {
 void Travelor::editprofile(){
     bool exitSub = false;
     while (!exitSub) {
-        print_symbol('=', 34);
         cout << setw(28) << "Edit Profile Sub-Menu" << endl;
-        print_symbol('=', 34);
         cout << "1. Edit country\n2. Edit state\n3. Edit email\n4. Back to main menu" << endl;
         int subChoice;
         cin >> subChoice;
