@@ -57,6 +57,7 @@ class Travelor:public Person{
 
         //shower function for traveler profile
         void printProfile()const {};
+        void editprofile(){};// return true if edit successfully, otherwise return false
 };
 void Travelor::printProfile()const {
     cout<<"UserID: "<<getUserID()<<endl;
@@ -66,6 +67,50 @@ void Travelor::printProfile()const {
     cout<<"Email: "<<getEmail()<<endl;
     cout<<"User Level: "<<getUserLevel()<<endl;
     cout<<"Score: "<<getScore()<<endl;
+}
+
+void Travelor::editprofile(){
+    bool exitSub = false;
+    while (!exitSub) {
+        print_symbol('=', 34);
+        cout << setw(28) << "Edit Profile Sub-Menu" << endl;
+        print_symbol('=', 34);
+        cout << "1. Edit country\n2. Edit state\n3. Edit email\n4. Back to main menu" << endl;
+        int subChoice;
+        cin >> subChoice;
+        cout << endl;
+        switch (subChoice) {
+            case 1:{
+                cout << "Enter new country: ";
+                string newCountry;
+                cin >> newCountry;
+                setCountry(newCountry);
+            }
+                break;
+
+            case 2:{
+                cout << "Enter new state: ";
+                string newState;
+                cin >> newState;
+                setState(newState);
+            } break;
+            case 3:{
+                cout << "Enter new email: ";
+                string newEmail;
+                cin >> newEmail;
+                setEmail(newEmail);
+
+            }break;
+            
+            case 4:{
+                exitSub = true;
+            }break;
+            default:{
+                cout << "Invalid option. Please try again." << endl;
+                continue;}
+
+            }
+    }
 }
 
 #endif

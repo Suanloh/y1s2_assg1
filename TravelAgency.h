@@ -52,32 +52,31 @@ public:
             int inputT;
             string inputInfo1;
             cin>> inputT;
+            while (inputT != 1 && inputT != 2){
+                cout<<"Invalid input, please try again\n";
+                cin>>inputT;
+            }
             if (inputT ==1){
                 cout<<"Enter user name: ";
                 cin.ignore();
                 getline(cin,inputInfo1);
                 for (int i=0;i<travelerCount; i++){
                     if (travelers[i].getUsername()==inputInfo1)return i;
-                    else return -1;//notfound
                 }
-                    }
+            }
 
-            else if (inputT ==2){
+            else {
                 cout<<"Enter user ID: ";
-                cin.ignore();
                 cin>>inputInfo1;
                 for(int i=0;i<travelerCount;i++){
                     if (travelers[i].getUserID() == inputInfo1) return i; 
-                    else return -1;
-                }}
-            else {
-                cout<<"Invalid input, please try again\n";
-                return;
-                    }   
-    }
+                }
+            }
+        return -1;} // Not found
+};
     // int split(string line, string arr[], int maxParts);
   //check for future purpose
-};
+
 
 void TravelAgency::menu() {
     cout << "\ndebug: Entering menu function in TravelAgency class" << endl;
@@ -166,7 +165,7 @@ void TravelAgency::readFile() {
                 break;
             }
 
-            travelers[travelerCount] = Person(id, name);
+            // travelers[travelerCount] = Person(id, name);
 
             travelerCount++;
         }
@@ -187,27 +186,27 @@ void TravelAgency::saveFile() {
     cout << "TODO: Implement file saving for hotels, travelers, and reviews" << endl;
 }
 
-int TravelAgency::split(string line, string arr[], int maxParts) {
-    int count = 0;
-    string temp = "";
+// // int TravelAgency::split(string line, string arr[], int maxParts) {
+//     int count = 0;
+//     string temp = "";
 
-    for (int i = 0; i < line.length(); i++) {
-        if (line[i] == '\t') {
-            if (count < maxParts) {
-                arr[count++] = temp;
-                temp = "";
-            }
-        } else {
-            temp += line[i];
-        }
-    }
+//     for (int i = 0; i < line.length(); i++) {
+//         if (line[i] == '\t') {
+//             if (count < maxParts) {
+//                 arr[count++] = temp;
+//                 temp = "";
+//             }
+//         } else {
+//             temp += line[i];
+//         }
+//     }
 
-    if (count < maxParts) {
-        arr[count++] = temp;
-    }
+//     if (count < maxParts) {
+//         arr[count++] = temp;
+//     }
 
-    return count;
-}
+//     return count;
+// }
 
 void TravelAgency::SummarizeReviewsMenu() {
     bool exitSub = false;
@@ -259,7 +258,7 @@ void TravelAgency::ManageTravelerProfileMenu() {
         switch (subChoice) {
 
             case 1:{
-                cout << "TODO: Implement view profile\n=============================================" << endl;
+                cout << "Implement view profile\n=============================================" << endl;
                     int ind = findTravelorIndex();
                     if (ind == -1){
                         cout<<"Invalid info, please check again for the info"<<endl;
@@ -279,8 +278,10 @@ void TravelAgency::ManageTravelerProfileMenu() {
                 break;
 
             case 2:{
-                cout << "TODO: Implement edit profile\n=============================================" << endl;
+                cout << "Implement edit profile\n=============================================" << endl;
                 int ind =findTravelorIndex();
+                cout<<"Current profile is:\n";
+                travelers[ind].printProfile();
                 
             }
                 break;
