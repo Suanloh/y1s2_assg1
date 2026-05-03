@@ -25,7 +25,7 @@ void generateReport(const Hotel& h){
         cout << "Review ID: " << h.rv[i].getReviewID() 
              << ", Rating: " << h.rv[i].getRate() 
              << ", Comment: " << h.rv[i].getComment() 
-             << ", Hotel Name: " << h.rv[i].getHotelName() 
+             // << ", Hotel Name: " << h.rv[i].getHotelName() paiseh, already know hotel name
              << endl;
     }
 }
@@ -68,8 +68,8 @@ int main() {
     h1.showUserReview(t2);
 
     // ===== 6) Optional: start TA menu (will only work if TA has data loaded/hardcoded) =====
-    // TravelAgency ta("TestAgency");
-    // ta.Menu();
+    TravelAgency* ta = new TravelAgency("TestAgency");
+    ta->menu();
 
     return 0;
 }
