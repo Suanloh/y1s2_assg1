@@ -137,7 +137,7 @@ void TravelAgency::menu() {
 }
 
 bool TravelAgency::readFile() {
-    ifstream tFile("C:\\user.txt");
+    ifstream tFile("user.txt");
     if (!tFile) {
         cout << "Error: Cannot find user.txt.\n";
         return false; 
@@ -164,7 +164,7 @@ bool TravelAgency::readFile() {
     tFile.close();
     cout << "Travelers loaded: " << travelerCount << endl;
 
-    ifstream rFile("C:\\review.txt");
+    ifstream rFile("review.txt");
     if (!rFile) {
         cout << "Error: Cannot find review.txt.\n";
         return false;
@@ -208,7 +208,7 @@ bool TravelAgency::readFile() {
 }
 
 bool TravelAgency::saveFile() {
-    string tPath = "C:\\user.txt";
+    string tPath = "user.txt";
     ofstream tFile(tPath);
     if (!tFile) {
         cout << "Error: Cannot open user.txt for saving.\n";
@@ -225,7 +225,7 @@ bool TravelAgency::saveFile() {
     }
     tFile.close();
 
-    string rPath = "C:\\review.txt";
+    string rPath = "review.txt";
     ofstream rFile(rPath);
     if (!rFile) {
         cout << "Error: Cannot open review.txt for saving.\n";
