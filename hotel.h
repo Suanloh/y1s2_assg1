@@ -101,7 +101,7 @@ public:
             sortedRv[i] = rv[i];
         }
 
-        // Simple Bubble Sort (Allowed by assignment rules, no STL used)
+        // Simple Bubble Sort 
         for (int i = 0; i < reviewCount - 1; i++) {
             for (int j = 0; j < reviewCount - i - 1; j++) {
                 if (sortedRv[j].getRate() < sortedRv[j + 1].getRate()) {
