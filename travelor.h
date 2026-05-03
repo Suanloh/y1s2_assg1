@@ -68,7 +68,9 @@ void Travelor::printProfile()const {
 void Travelor::editprofile(){
     bool exitSub = false;
     while (!exitSub) {
+        cout << "\n=============================================" << endl;
         cout << setw(28) << "Edit Profile Sub-Menu" << endl;
+        cout << "=============================================" << endl;
         cout << "1. Edit username\n2. Edit state\n3. Edit email\n4. Back to main menu" << endl;
         int subChoice;
         cin >> subChoice;

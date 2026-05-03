@@ -33,6 +33,7 @@ public:
     void ManageTravelerProfileMenu();
     void TopPickMatcherMenu();
     void DebugMenu();
+    void updateTravelerLevels();
 
     bool readFile(); 
     bool saveFile();
@@ -136,7 +137,7 @@ void TravelAgency::menu() {
 }
 
 bool TravelAgency::readFile() {
-    ifstream tFile("user.txt");
+    ifstream tFile("C:\\user.txt");
     if (!tFile) {
         cout << "Error: Cannot find user.txt.\n";
         return false; 
@@ -163,7 +164,7 @@ bool TravelAgency::readFile() {
     tFile.close();
     cout << "Travelers loaded: " << travelerCount << endl;
 
-    ifstream rFile("review.txt");
+    ifstream rFile("C:\\review.txt");
     if (!rFile) {
         cout << "Error: Cannot find review.txt.\n";
         return false;
@@ -201,12 +202,13 @@ bool TravelAgency::readFile() {
     }
     rFile.close();
     cout << "Reviews loaded: " << rCount << " (Discovered " << hotelCount << " Hotels)\n";
+    updateTravelerLevels();
     cout << "\nAll data loading completed.\n";
     return true;
 }
 
 bool TravelAgency::saveFile() {
-    string tPath = "user.txt";
+    string tPath = "C:\\user.txt";
     ofstream tFile(tPath);
     if (!tFile) {
         cout << "Error: Cannot open user.txt for saving.\n";
@@ -223,7 +225,7 @@ bool TravelAgency::saveFile() {
     }
     tFile.close();
 
-    string rPath = "review.txt";
+    string rPath = "C:\\review.txt";
     ofstream rFile(rPath);
     if (!rFile) {
         cout << "Error: Cannot open review.txt for saving.\n";
@@ -340,6 +342,9 @@ void TravelAgency::SummarizeReviewsMenu() {
                 
                 travelers[tInd].setScore(travelers[tInd].getScore() + points);
                 cout << "\nYay! Points Awarded to " << travelers[tInd].getUsername() << ": +" << points << " points (Total: " << travelers[tInd].getScore() << ")\n";
+                
+                updateTravelerLevels();
+
                 cout << "SUCCESS! Review recorded.\n";
                 break;
             }
@@ -512,7 +517,8 @@ void TravelAgency::DebugMenu() {
         print_symbol('=', 34);
         cout << "1. View Hotel Array Extracted from review.txt" << endl;
         cout << "2. View Traveler Array Extracted from user.txt" << endl;
-        cout << "3. Back to main menu" << endl;
+        cout << "3. Add Points to a Traveler (Test Tier Upgrades)" << endl; // NEW OPTION
+        cout << "4. Back to main menu" << endl;
         int subChoice;
         
         if (!(cin >> subChoice)) {
@@ -543,18 +549,67 @@ void TravelAgency::DebugMenu() {
                     for (int i = 0; i < travelerCount; i++) {
                         cout << "[" << i << "] " << travelers[i].getUsername() 
                             << " (UserID: " << travelers[i].getUserID() 
+                            << ", Tier: " << travelers[i].getUserLevel()
                             << ", Score: " << travelers[i].getScore() << ")\n";
                     }
                 }
                 break;
             }
-            case 3:
+            case 3: {
+                cout << "--- Admin Point Modification ---\n";
+                int tInd = findTravelorIndex();
+                if (tInd == -1) {
+                    cout << "Traveler not found in the database.\n";
+                    break;
+                }
+                
+                cout << "\nSelected: " << travelers[tInd].getUsername() 
+                     << " (Current Score: " << travelers[tInd].getScore() 
+                     << " | Current Tier: " << travelers[tInd].getUserLevel() << ")\n";
+                     
+                int pointsToAdd;
+                cout << "Enter number of points to instantly add: ";
+                while (!(cin >> pointsToAdd)) {
+                    cin.clear(); cin.ignore(1000, '\n');
+                    cout << "Invalid input. Please enter a valid number: ";
+                }
+                
+                // Add the points
+                travelers[tInd].setScore(travelers[tInd].getScore() + pointsToAdd);
+                cout << "\nSystem forced +" << pointsToAdd << " points to " << travelers[tInd].getUsername() << ".\n";
+                
+                // Instantly check if this pushed them into a new tier!
+                updateTravelerLevels(); 
+                
+                break;
+            }
+            case 4:
                 exitSub = true;
                 break;
             default:
                 cout << "Invalid option. Please try again." << endl;
         }
     } while (!exitSub);
+}
+
+// Evaluates all travelers and upgrades/downgrades their level based on points
+void TravelAgency::updateTravelerLevels() {
+    for(int i = 0; i < travelerCount; i++) {
+        string oldLevel = travelers[i].getUserLevel();
+        int points = travelers[i].getScore();
+        string newLevel = "Basic";
+
+        if (points >= 10000) newLevel = "Platinum";
+        else if (points >= 5000) newLevel = "Gold";
+        else if (points >= 1000) newLevel = "Silver";
+
+        // If the level has changed, update it and notify the console!
+        if (newLevel != oldLevel) {
+            travelers[i].setUserLevel(newLevel);
+            cout << "\n[!] TIER UPDATE: " << travelers[i].getUsername() 
+                 << " has been changed from " << oldLevel << " to " << newLevel << " Tier!\n";
+        }
+    }
 }
 
 void print_symbol(char symbol, int count) {
