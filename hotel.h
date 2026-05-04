@@ -82,10 +82,11 @@ public:
             }
         }
 
-        if (!found) {
+        /* if (!found) {
             cout << "No reviews by user " << p.getUserID()
                 << " for hotel " << hotelName << ".\n";
-        }
+        } */
+       // this no need, I felt annoying everytime a bunch of this come out
     }
 
     // Displays all reviews for this hotel sorted from 5-star down to 1-star
