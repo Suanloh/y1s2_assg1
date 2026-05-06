@@ -601,7 +601,7 @@ void TravelAgency::updateTravelerLevels() {
 
         if (points >= 10000) newLevel = "Platinum";
         else if (points >= 5000) newLevel = "Gold";
-        else if (points >= 1000) newLevel = "Silver";
+        else if (points >= 1000) newLevel = "Silver"; // totally ok with no else cuz we have the base level as default(basic)
 
         // If the level has changed, update it and notify the console!
         if (newLevel != oldLevel) {
