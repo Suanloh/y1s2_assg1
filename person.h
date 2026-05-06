@@ -5,7 +5,11 @@
 using namespace std;
 
 class Person{
-    protected:
+    protected: 
+    /*use for slicing problem, if we use private, the derived class cannot access the data member of the base class, 
+    but if we use protected, the derived class can access the data member of the base class, but other class cannot access the 
+    data member of the base class*/
+    
         string userID;
         string username;
     
